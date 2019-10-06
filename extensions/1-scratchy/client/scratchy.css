@@ -1,0 +1,14 @@
+@font-face {
+  font-family: AmaticSC;
+  src: url('client/AmaticSC.ttf');
+}
+
+.scratchy { border: 0 none; font-family: AmaticSC; }
+.scratchy.box { background: left 2em bottom -2px url('client/scratchy-horiz.png') repeat-x, -3px -3px url('client/scratchy-horiz.png') repeat-x, right -3px top 2em url('client/scratchy-vert.png') repeat-y, -1px -1px url('client/scratchy-vert.png') repeat-y; }
+table.scratchy { border-collapse: collapse; background: -3px -3px url('client/scratchy-horiz.png') repeat-x, -1px -1px url('client/scratchy-vert.png') repeat-y; }
+table.scratchy tr { background: url('client/scratchy-horiz.png') repeat-x; background-position: left 0 bottom -1px; }
+table.scratchy tr:nth-child(2n) { background-position: left 4em bottom -1px; }
+table.scratchy tr:nth-child(3n) { background-position: left 7em bottom -1px; }
+table.scratchy td, table.scratchy th { border: 0 none; padding: 5px; background: url('client/scratchy-vert.png') repeat-y; background-position: right -3px top 0; }
+.scratchy.under { background: url('client/scratchy-horiz.png') repeat-x; background-position: left 1em bottom -1px; }
+button.scratchy, input.scratchy[type="submit"], input.scratchy[type="button"], input.scratchy[type="reset"] { background-color: #EEE!important; cursor: pointer; }

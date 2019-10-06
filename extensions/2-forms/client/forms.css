@@ -1,0 +1,44 @@
+@font-face {
+  font-family: FontAwesome;
+  src: url('client/FontAwesome.ttf');
+}
+
+[required] { background: linear-gradient(225deg, red 5px, white 5px); }
+
+input[type="checkbox"] { position: absolute; opacity: 0; z-index: -1; }
+input[type="checkbox"] + span { color: #000; }
+input[type="checkbox"] + span:before { font-family: FontAwesome; content: '\f096'; display: inline-block; padding: 1px 2px 0 1px; margin-right: 0.5em; }
+input[type="checkbox"]:checked + span:before { padding-right: 0; content: '\f046'; }
+input[type="checkbox"]:focus + span:before { text-shadow: 1px 1px 2px #77F; }
+input[type="checkbox"]:disabled + span { color: #999; }
+input[type="checkbox"]:enabled + span:hover:before { text-shadow: 0 1px 2px #77F; }
+
+input[type="radio"] { position: absolute; opacity: 0; z-index: -1; }
+input[type="radio"] + span { color: #000; }
+input[type="radio"] + span:before { font-family: FontAwesome; content: '\f1db'; display: inline-block; padding: 1px 1px 0 1px; margin-right: 0.5em; }
+input[type="radio"]:checked + span:before { content: '\f192'; }
+input[type="radio"]:focus + span:before { text-shadow: 0 1px 2px #77F; }
+input[type="radio"]:disabled + span { color: #999; }
+input[type="radio"]:enabled + span:hover:before { text-shadow: 0 1px 2px #77F; }
+
+input[type=number] { width: 4em; text-align: right; }
+input[type=number]::placeholder { text-align: left; }
+
+input:not([type]), input[type=""], input[type="text"], input[type="number"], input[type="time"], input[type="date"], input[type="email"] { border-radius: 3px; border: 1px solid #999; padding: 5px; height: 1.5em; }
+select { border-radius: 3px; border: 1px solid #999; padding: 4px 5px; }
+select, input:focus { outline: 0 none; }
+select:focus, input:not([type]):focus, input[type=""]:focus, input[type="text"]:focus, input[type="number"]:focus, input[type="time"]:focus, input[type="date"]:focus, input[type="email"]:focus { box-shadow: 0 0 3px #77F inset; }
+
+button, input[type="submit"], input[type="reset"] { border: 1px solid #666; border-radius: 3px; padding: 5px; text-shadow: 0px 1px #FFF; box-shadow: 0px 1px #FFF inset; background: linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%); color: #333; font-weight: bold; background-color: #f9f9f9; cursor: pointer; }
+button:hover, input[type="submit"]:hover, input[type="reset"]:hover { background: linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%); }
+button:focus, input[type="submit"]:focus, input[type="reset"]:focus { box-shadow: 0 0 3px #77F; }
+button:active, input[type="submit"]:active, input[type="reset"]:active { position: relative; top: 1px; }
+
+label.file { display: inline-block; border-radius: 3px; border: 1px solid #666; padding: 4px; position: relative; }
+label.file span, label.file button { padding: 5px; box-sizing: border-box; position: absolute; top: 0; height: 100%; }
+label.file span { left: 0; z-index: -2; font-size: small; }
+label.file button { right: 0; z-index: -1; border-left: 1px solid #666; border-radius: 0; border: 0 none; border-left: 1px solid #666; }
+label.file:hover button { background: linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%); }
+input[type="file"] { opacity: 0; cursor: pointer; }
+
+label.file.image+.preview img { width: 200px; }
