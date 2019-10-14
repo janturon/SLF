@@ -31,23 +31,28 @@ class Model extends SQLite3 {
     return $return;
   }
 
-  static function format($type, &$i) {
-    if($type=='i') $i = (int)$i;
-    else if($type=='f') $i = (float)$i;
-    else $i = "'".SQLite3::escapeString($i)."'";
+  function format($type, $var) {
+		switch($type) {
+			case "i":
+			case "d":	return (int)$var;
+	    case "f":	return (float)$var;
+			case "%": return "%";
+	    case "s": return "'".SQLite3::escapeString($var)."'";
+			default: error("unknown parsing type $type"); break;
+		}
   }
 
-  static function formats($types, &$i0, &$i1=null, &$i2=null, &$i3=null) {
-    $len = strlen($types);
-    if($len>3) self::format($types[3], $i3);
-    if($len>2) self::format($types[2], $i2);
-    if($len>1) self::format($types[1], $i1);
-    if($len>0) self::format($types[0], $i0);
-  }
+	private $args = array();
+	function buildQuery($query) {
+		$this->args = func_get_args();
+		array_shift($this->args);
+		$callback = function($m) { return $this->format($m[1], array_shift($this->args)); };
+		return preg_replace_callback("/%([^%])/", $callback, $query);
+	}
 
   function __construct($db) {
     if(!is_file($db)) error("$db does not exist.");
-    $this->open($db);
+		$this->open($db);
     $this->createFunction('hm','hm');
     $this->createFunction('m2t','m2t');
   }

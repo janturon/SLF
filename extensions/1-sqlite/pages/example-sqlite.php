@@ -2,15 +2,15 @@
   $GLOBALS["TEMPLATE"] = "";
 
   // global MODEL is set by load.php to work with database defined there
-  // call /admin to run phpliteadmin
+  // call /admin.php to run phpliteadmin
   $MODEL = new Model("data/sqlite/db/example-sqlite.db");
 
   $hours = $MODEL->querySingle("SELECT m2t(SUM(hm(hours))) FROM times");
 
   class MyModel extends Model {
     function getTime($rowid,$name) {
-      self::formats("is", $rowid, $name);
-      return $this->querySingle("SELECT hours FROM times WHERE rowid=$rowid AND name=$name");
+      $query = $this->buildQuery("SELECT hours FROM times WHERE rowid=%d AND name=%s", $rowid, $name);
+      return $this->querySingle($query);
     }
   }
   $MODEL2 = new MyModel("data/sqlite/db/example-sqlite.db");
