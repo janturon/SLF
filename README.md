@@ -28,7 +28,7 @@ function getVar(&$arr, $val, $default=null, $yell=false) {
     if($yell) error("getVar variable does not exists.");
     return $default;
   }
-  if(!isset($arr, $val)) {
+  if(!isset($arr[$val])) {
     if($yell) error("missing argument $val");
     return $default;
   }
@@ -89,6 +89,8 @@ function loadExtensions() {
   closedir($dd);
   sort($dirs);
   foreach($dirs as $dir) {
+		$name = substr(basename($dir),2);
+		$GLOBAL["EXTENSION"][$name] = true;
     $loader = "extensions/$dir/load.php";
     if(!is_file($loader)) error("Missing loader for extension $dir.");
     include $loader; // variables in local context unless GLOBALS is used
