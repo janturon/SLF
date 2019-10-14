@@ -29,6 +29,7 @@ function getVar(&$arr, $val, $default=null, $yell=false) {
     $type = gettype($arr[$val]);
     if($type!=$default) error("argument expected $default type, got $type instead");
   }
+	return $arr[$val];
 }
 function SESS($val) { return getVar($_SESSION, $val); }
 function POST($val) { return getVar($_POST, $val); }
