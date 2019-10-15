@@ -50,6 +50,18 @@ class Model extends SQLite3 {
 		return preg_replace_callback("/%([^%])/", $callback, $query);
 	}
 
+	function execQuery($query) {
+		$args = func_get_args();
+		$query = call_user_func_array(array($this, "buildQuery"), $args);
+		$this->exec($query);
+	}
+
+	function selectQuery($query) {
+		$args = func_get_args();
+		$query = call_user_func_array(array($this, "buildQuery"), $args);
+		return $this->select($query);
+	}
+
   function __construct($db) {
     if(!is_file($db)) error("$db does not exist.");
 		$this->open($db);
