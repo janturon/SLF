@@ -6,6 +6,12 @@ function error($msg) {
   exit;
 }
 
+function debug($var) {
+	echo "<pre>";
+	print_r($var);
+	echo "</pre>";
+}
+
 // $PAGE and $URL
 $URL = parse_url($_SERVER["REQUEST_URI"]);
 $PAGE = pathinfo($URL["path"], PATHINFO_FILENAME);
