@@ -1,5 +1,7 @@
 ﻿<?
+error_reporting(E_ALL);
 session_start();
+date_default_timezone_set("Europe/Prague");
 
 function error($msg) {
   echo "<pre>$msg";
@@ -22,18 +24,30 @@ if(!is_file("pages/$PAGE.php")) $PAGE = "404";
 
 $VIEWPORT = "";
 
+function getErrorSource($level=2) {
+  $stack = debug_backtrace();
+  $src = $stack[$level];
+  return sprintf("%s:%d", $src["file"], $src["line"]);
+}
+
 function getVar(&$arr, $val, $default=null, $yell=false) {
   if(!isset($arr)) {
-    if($yell) error("getVar variable does not exists.");
+    if($yell) {
+      error("getVar variable does not exists - ".getErrorSource());
+    }
+    return $default;
+  }
+  if(gettype($arr)!="array") {
+    if($yell) error("getVar variable is not an array - ".getErrorSource());
     return $default;
   }
   if(!isset($arr[$val])) {
-    if($yell) error("missing argument $val");
+    if($yell) error("missing argument $val - ".getErrorSource());
     return $default;
   }
   if($yell && $default) {
     $type = gettype($arr[$val]);
-    if($type!=$default) error("argument expected $default type, got $type instead");
+    if($type!=$default) error("argument expected $default type, got $type instead - ".getErrorSource());
   }
 	return $arr[$val];
 }
@@ -58,7 +72,7 @@ function loadExtensions() {
   sort($dirs);
   foreach($dirs as $dir) {
 		$name = substr(basename($dir),2);
-		$GLOBAL["EXTENSION"][$name] = true;
+		$GLOBALS["EXTENSION"][$name] = true;
     $loader = "extensions/$dir/load.php";
     if(!is_file($loader)) error("Missing loader for extension $dir.");
     include $loader; // variables in local context unless GLOBALS is used
@@ -66,6 +80,11 @@ function loadExtensions() {
 }
 $EXTENSION = array();
 loadExtensions();
+
+function dependency($extension) {
+  if($ext=getVar($GLOBALS, "EXTENSION", "array", true))
+  if(!getVar($ext,$extension)) error("missing dependency $extension in extension ".basename(__DIR__));
+}
 
 // page and viewport
 if($PAGE=="404") header("HTTP/1.0 404 Not Found");
